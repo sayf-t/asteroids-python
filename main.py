@@ -5,6 +5,7 @@ import pygame
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 from constants import *
 
 def main(): 
@@ -15,9 +16,12 @@ def main():
 	updatables = pygame.sprite.Group()
 	drawables = pygame.sprite.Group()
 	asteroids = pygame.sprite.Group()
+	shots = pygame.sprite.Group()
+
 	# After changing a static field like containers, make sure to create all objects after the change
 	Player.containers = (updatables, drawables)
 	Asteroid.containers = (asteroids, updatables, drawables)
+	Shot.containers = (shots, updatables, drawables)
 	AsteroidField.containers = (updatables)
 	asteroidfield = AsteroidField()
 
@@ -32,6 +36,7 @@ def main():
 				return
 
 		screen.fill(BLACK)
+		player.shoot()
 		updatables.update(dt)
 		for asteroid in asteroids:
 			if player.collision(asteroid):
